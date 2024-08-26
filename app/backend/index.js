@@ -1,23 +1,24 @@
-const express = require('express');
-const axios = require('axios');
+const express = require("express");
+const axios = require("axios");
 const app = express();
 
 app.use(express.json());
 
-app.post('/proxy', async (req, res) => {
+app.post("/proxy", async (req, res) => {
   try {
-    const response = await axios.post('https://api.africastalking.com/endpoint', req.body, {
+    const response = await axios.post("https://insights.sandbox.africastalking.com/v1/sim-swap", req.body, {
       headers: {
-        'Content-Type': 'application/json',
-        'apiKey': 'your_api_key_here',
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "apiKey": "" // include your api key.
       },
     });
     res.json(response.data);
-  } catch (error) {
-    res.status(error.response.status).json({ message: error.message });
+  } catch (err) {
+    res.status(err.response.status).json({ message: err.message });
   }
 });
 
 app.listen(3000, () => {
-  console.log('Proxy server running on port 3000');
+  console.log("Proxy server running on port 3000");
 });
