@@ -17,7 +17,7 @@ const Fraud_Message = ({ fraud, phone_number }) => {
         const headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
-            "apiKey": "atsk_239e760c8d83565992600f27bb224826718b370dba777b6ef97db562ce6e020038af6132"
+            "apiKey": "" // include your api key.
         };
 
         const req_data = {
