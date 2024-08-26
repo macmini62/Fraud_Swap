@@ -91,28 +91,3 @@ def model_prediction(model):
     prediction = model.predict(df3)
 
     return prediction.tolist()
-
-
-    # # Desicion Tree Classifier
-    # dtree = DecisionTreeClassifier()
-    # dtree.fit(X_train,y_train)
-
-    # # Save the model as a pickle in a file 
-    # joblib.dump(dtree, 'Trained_Modes/fraud_detection_dtree.pkl') 
-    # # Load the model from the file 
-    # dtree_from_joblib = joblib.load('Trained_Models/fraud_detection_dtree.pkl') 
-    # # Use the loaded model to make predictions 
-
-    # # test_data = pd.read_csv("test_data.csv")
-    # dtree_pred = dtree_from_joblib.predict(X_test) 
-
-    # print(f"training_data: {X_train}")
-    # print(f"test_data:{X_test}")
-    # print(f"y_train{y_train}")
-    # print(f"y_test:{y_test}")
-    # print(dtree_pred)
-
-    # print(confusion_matrix(y_test,dtree_pred))
-    # print('\n')
-    # print(classification_report(y_test,dtree_pred))
-
