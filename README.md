@@ -29,3 +29,4 @@
 - In the sandbox generate an API token.
 - This will be used in the application as it requires the application to have an API token and a username in order to access the Africastalking services.
 - After starting your application, click the heroku app cors endpoint. found in app/frontend/fraud_message.jsx. Open the link in the browser to use for the application and enable temporarily acess to the demo. This will allow for CORS accessibility of the application.
+- One can use the heroku app cors endpoint or modify the application to use the proxy server in app/backend in order to bypass the cors restrictions.
