@@ -1,4 +1,8 @@
 const express = require("express");
-const controller = require("controller.js");
+const postData = require("./controller.js");
 
-express.Router().get("/proxy", )
+router = express.Router()
+
+router.get("/proxy/:phoneNumber", postData)
+
+module.exports = router;

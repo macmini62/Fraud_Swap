@@ -2,68 +2,36 @@ import { useState } from "react";
 import "./index.css";
 import axios from "axios";
 import Loading from "./loading";
-import { IoMdCloudyNight } from "react-icons/io";
+// import { IoMdCloudyNight } from "react-icons/io";
 
 
 const Fraud_Message = ({ fraud, phone_number }) => {
 
-    const [swap_status, set_swap_status] = useState(false);
+    const [swap, set_swap] = useState();
     const [is_loading, set_is_loading] = useState(false);
 
     
     const check_swap = async () => {
         set_is_loading(true);
-        if (swap_status){ set_swap_status(false); }
+        if (swap){ set_swap(false); }
 
         const headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
             "ngrok-skip-browser-warning":"*",
-        //     "apiKey": "atsk_239e760c8d83565992600f27bb224826718b370dba777b6ef97db562ce6e020038af6132" // include your api key.
         };
-
-        // const req_data = {
-        //     "username": "sandbox",
-        //     "phoneNumbers": [phone_number]
-        // }
-
-        // phone_number = +254790503893
     
         axios
-            // .post("https://cors-anywhere.herokuapp.com/https://insights.sandbox.africastalking.com/v1/sim-swap", req_data, {headers})
-            // .get(`https://a331-41-139-168-163.ngrok-free.app/swap/check/${phone_number}`)
-            .post("http://localhost:5555/proxy", phone_number)
+            .get(`http://localhost:5555/proxy/${phone_number}`)
             .then((res) => {
-                const responses = res.data.responses;
-                console.log(res);
+                const responses = res.data;
+                console.log(responses);
                 set_is_loading(false);
-                set_swap_status(true);
+                set_swap(res.data);
             })
             .catch((err) => {
                 console.log(err);
             })
-
-            // .post("https://cors-anywhere.herokuapp.com/https://insights.sandbox.africastalking.com/v1/sim-swap", req_data, {headers})
-            // try {
-            //     const response = await fetch(`https://a331-41-139-168-163.ngrok-free.app/swap/check/${phone_number}`, {
-            //         headers
-            //     })
-            //     console.log(response, " the response.......")
-            //     console.log(response.body, " the response url.......")
-                    
-            // } catch (error) {
-            //    console.log(error)   
-            // }
-            // .post(`http://localhost:5555/proxy`, phone_number)
-            // .then((res) => {
-            //     const responses = res.data.responses;
-            //     console.log(res);
-            //     set_is_loading(false);
-            //     set_swap_status(true);
-            // })
-            // .catch((err) => {
-            //     console.log(err);
-            // })
     }
 
     const reload_page = () => {
@@ -98,11 +66,19 @@ const Fraud_Message = ({ fraud, phone_number }) => {
             </section>
             { is_loading && <Loading/> }
             {
-                swap_status &&
+                swap &&
                 <section className="swap-message">
-                    <p>
-                        {phone_number} has been blacklisted.
-                    </p>
+                    <div>
+                        {
+                            swap.status == "Swapped" ?
+                                <p>{swap.phone_number} has been swapped. Swap date is {Date.toLocaleString(swap.last_swap)}</p>
+                            :
+                            swap.status == "NoSwapDate" ?
+                                <p>{phone_number} has not been swapped</p>
+                            :
+                                <p>Invalid phone number</p>
+                        }
+                    </div>
                 </section>
             }
         </>
