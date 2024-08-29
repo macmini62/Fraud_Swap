@@ -15,6 +15,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 def application():
     return("Wait for further instructions!")
 
+# accepts user data from the application.
 @app.post("/sim_swap_check/check_fraud")
 def post_data():
     input_data = request.json
@@ -23,7 +24,6 @@ def post_data():
         if input_data[data] == "":
             return ValueError
 
-    user_phone_number = input_data["phone_number"]
     print(input_data)
 
     data_save(input_data)
@@ -36,6 +36,8 @@ def post_data():
     return prediction
 
 
+# saves the users data into a csv file. 
+# this will allow the model to predict the inference with respect to the data.
 def data_save(input_data):
     test_data = {
         "type": input_data["transaction_type"],

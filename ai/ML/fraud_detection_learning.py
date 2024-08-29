@@ -41,7 +41,6 @@ def model_training():
     # in different units of measurement.
     sc = StandardScaler()
     x_scaled = sc.fit_transform(X)
-
     print(f"X: {X}")
 
     df3 = pd.DataFrame(x_scaled) #change to dataframe from array that was created in standard scaler function
@@ -58,15 +57,10 @@ def model_training():
     # fit and apply the transform
     X_over, y_over = undersample.fit_resample(X, y)
     # summarize class distribution
-    # print(Counter(y_over))
 
     X_train, X_test, y_train, y_test = train_test_split(X_over, y_over,test_size=0.5,random_state=1,shuffle=True)
     len(y_train)
 
-
-    # EXPLORING CLASSIFIERS TO BUILD FINAL ML MODEL.
-
-    # Grid Search KNN 
     # Determining the number of neighbors using RandomizedSearchCV
     param_grid = {'n_neighbors': range(1,20)}
     knn = RandomizedSearchCV(KNeighborsClassifier(), param_grid, verbose=3)
@@ -90,4 +84,4 @@ def model_prediction(model):
     df3 = pd.DataFrame(df_scaled)
     prediction = model.predict(df3)
 
-    return prediction.tolist()
+    return prediction.tolist() #convert the ndarray to a list.
