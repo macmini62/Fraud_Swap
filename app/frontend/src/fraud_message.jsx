@@ -2,12 +2,11 @@ import { useState } from "react";
 import "./index.css";
 import axios from "axios";
 import Loading from "./loading";
-// import { IoMdCloudyNight } from "react-icons/io";
 
 
 const Fraud_Message = ({ fraud, phone_number }) => {
 
-    const [swap, set_swap] = useState();
+    const [swap, set_swap] = useState({});
     const [is_loading, set_is_loading] = useState(false);
 
     
@@ -15,19 +14,24 @@ const Fraud_Message = ({ fraud, phone_number }) => {
         set_is_loading(true);
         if (swap){ set_swap(false); }
 
-        const headers = {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-            "ngrok-skip-browser-warning":"*",
-        };
+        // const headers = {
+        //     "Accept": "application/json",
+        //     "Content-Type": "application/json",
+        //     "ngrok-skip-browser-warning":"*",
+        // };
     
         axios
-            .get(`http://localhost:5555/proxy/${phone_number}`)
+            .get(`http://localhost:6666/proxy/${phone_number}`)
             .then((res) => {
                 const responses = res.data;
                 console.log(responses);
                 set_is_loading(false);
-                set_swap(res.data);
+
+                const date = new Date(res.data.last_swap);
+                set_swap({
+                        ...res.data,
+                        last_swap: date.toLocaleString()
+                });
             })
             .catch((err) => {
                 console.log(err);
@@ -71,12 +75,21 @@ const Fraud_Message = ({ fraud, phone_number }) => {
                     <div>
                         {
                             swap.status == "Swapped" ?
-                                <p>{swap.phone_number} has been swapped. Swap date is {Date.toLocaleString(swap.last_swap)}</p>
+                                <p>{swap.phone_number} has been swapped. Swap date is {swap.last_swap}</p>
                             :
                             swap.status == "NoSwapDate" ?
-                                <p>{phone_number} has not been swapped</p>
+                                <p>{phone_number} has not been swapped.</p>
                             :
-                                <p>Invalid phone number</p>
+                            swap.status == "Queued" ? 
+                                <p>{swap.phone_number} has been queued.</p>
+                            :
+                            swap.status == "InvalidPhoneNumber" ?
+                                <p>Invalid or Unsupported phone number</p>
+                            :
+                            swap.status == "UnsupportedPhoneNumber" ?
+                                <p>Invalid or Unsupported phone number</p>
+                            :
+                            <p></p>
                         }
                     </div>
                 </section>

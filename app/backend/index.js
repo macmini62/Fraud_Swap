@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const route = require("./route.js");
 
-const port = 5555;
+const port = 6666;
 const corOptions = {
     origin: "http://localhost:5173",
     optionsSuccessStatus: 200
