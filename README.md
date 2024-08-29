@@ -13,7 +13,7 @@
 
 ## Installation.
 - For this project you'll need to have the latest node js version and latest python version.
-- Create a virtual environment. execute `python3 -m env myenv` to create the environment. Then execute `source myenv/bin/activate` to start the virtual environment.
+- Create a virtual environment. execute `python3 -m venv myenv` to create the environment. Then execute `source myenv/bin/activate` to start the virtual environment.
 - In order to run this application one need several Python libraries:
     * Pandas
     * Seaborn
