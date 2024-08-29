@@ -48,6 +48,8 @@ const App = () => {
 
         set_is_loading(true);
 
+        console.log(upload_data);
+
         axios
             .post("http://127.0.0.1:5005/sim_swap_check/check_fraud", upload_data)
             .then((res) => {

@@ -1,24 +1,19 @@
-const express = require("express");
-const axios = require("axios");
+import express from "express";
+import cors from "cors";
+import route from "./route.js";
+
+const port = 5555;
+const corOptions = {
+    origin: "http://localhost:5173",
+    optionsSuccessStatus: 200
+};
 const app = express();
 
+// middleware
+app.use(cors(corOptions));
 app.use(express.json());
+app.use("/", route);
 
-app.post("/proxy", async (req, res) => {
-  try {
-    const response = await axios.post("https://insights.sandbox.africastalking.com/v1/sim-swap", req.body, {
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-        "apiKey": "" // include your api key.
-      },
-    });
-    res.json(response.data);
-  } catch (err) {
-    res.status(err.response.status).json({ message: err.message });
-  }
-});
-
-app.listen(3000, () => {
-  console.log("Proxy server running on port 3000");
+app.listen(port, () => {
+    console.log(`Server is running on port: ${port}`);
 });
