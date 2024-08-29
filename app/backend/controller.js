@@ -1,6 +1,6 @@
-const fetch = require('node-fetch'); // Ensure you have node-fetch installed
+import fetch from "node-fetch"; // Ensure you have node-fetch installed
 
-const postData = async (req, res) => {
+export const postData = async (req, res) => {
     try {
         const phone_number = req.params.phoneNumber;
         console.log(phone_number);
@@ -48,4 +48,3 @@ const postData = async (req, res) => {
     }
 };
 
-module.exports = postData;
